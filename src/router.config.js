@@ -6,6 +6,7 @@
 // import Mine from './components/Mine.vue'
 import Login from './components/Login.vue'
 import Reg from './components/Reg.vue'
+import Search from './components/Search.vue'
 export default [
 //     {
 //     path: '/home',
@@ -24,6 +25,9 @@ export default [
 //     component: Mine
 // }, 
 {
+    path: '/search',
+    component: Search
+},{
     path: '/login',
     component: Login
 }, {

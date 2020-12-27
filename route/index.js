@@ -4,7 +4,7 @@ const common = require('../libs/common');
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'ghl1984',
     database: 'tenji'
 });
 module.exports = () => {
@@ -48,7 +48,8 @@ module.exports = () => {
                 }
             }
         });
-    };
+    }
+
     route.get('/categorygoods', (req, res) => {
         let mId = req.query.mId;
         const sql = `select * from product,category where product.category_id=category.category_id and category.category_id='${mId}'`;
@@ -110,31 +111,11 @@ module.exports = () => {
     })
 
     route.get('/search', (req, res) => {
-        let keyWord = req.query.kw;
-        let hot = req.query.hot;
-        let priceUp = req.query.priceUp;
-        let priceDown = req.query.priceDown;
-        const keywordStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%'`;
-        const hotStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_comment_num desc`;
-        const priceUpStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_uprice asc`;
-        const priceDownStr = `select  *  from product,shop where product.shop_id=shop.shop_id and product.product_name like '%${keyWord}%' order by product_uprice desc`;
-        if (keyWord != '') {
-            if (hot != '') {
-                getSearchDatas(hotStr, res);
-            } else if (priceUp != '') {
-                getSearchDatas(priceUpStr, res);
-            } else if (priceDown != '') {
-                getSearchDatas(priceDownStr, res);
-            } else {
-                getSearchDatas(keywordStr, res);
-            }
-        }
-
-    });
-    /**
-        get search datas
-    */
-    function getSearchDatas(keywordStr, res) {
+        
+        const keywordStr = `select employee.employee_id,name,frigana,entering_date,certification_name,get_date,encourage_date 
+                            from employee,employee_certification 
+                            where employee.employee_id=employee_certification.employee_id`;
+       
         db.query(keywordStr, (err, data) => {
             if (err) {
                 console.log(err);
@@ -147,7 +128,9 @@ module.exports = () => {
                 }
             }
         });
-    }
+
+    });
+  
     /*
      *user reg func
      */
@@ -174,8 +157,8 @@ module.exports = () => {
             } else {
                 res.send({ 'msg': '注册成功', 'status': 1 }).end();
             }
-        })
-    };
+        });
+    }
     route.post('/login', (req, res) => {
 
         let mObj = {};
@@ -184,7 +167,7 @@ module.exports = () => {
             console.log(mObj);
         }
         let username = mObj.loginName;
-        let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE);;
+        let password = common.md5(mObj.loginPawd + common.MD5_SUFFXIE);
         // console.log(username, mObj.passwd);
         const selectUser = `SELECT * FROM user where user_name='${username}'`;
         db.query(selectUser, (err, data) => {
