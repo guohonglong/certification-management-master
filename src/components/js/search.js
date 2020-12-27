@@ -65,7 +65,7 @@ export default {
           
             _this.$http.get('/search',{
                 params:{
-                    kw:_this.keyword,
+                    kw:'',
                     hot:'',
                     priceUp:'',
                     priceDown:''
