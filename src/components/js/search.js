@@ -1,6 +1,11 @@
 export default {
     data () {
       return {
+        date: new Date().toISOString().substr(0, 10),
+        menu: false,
+        modal: false,
+        menu2: false,
+        showSearch: false,
         headers: [
           {
             text: '社員ID',
@@ -16,16 +21,7 @@ export default {
           { text: '奨励金日付', value: 'encourage_date' },
           { text: '', value: 'actions', sortable: false },
         ],
-        desserts: [
-            {
-                name: '郭',
-                frigana: 'カク',
-                entering_date: '20190101',
-                certification_name: '日本語能力試験1級',
-                get_date: '20180601',
-                encourage_date: '20180601',
-              },
-        ],
+        desserts: [],
         editedIndex: -1,
         editedItem: {
             name: '',
@@ -43,6 +39,9 @@ export default {
         },
       }
     },
+    created () {
+        this.initialize()
+      },
     methods:{
         initialize () {
             let _this = this;
@@ -79,6 +78,9 @@ export default {
               
             
              window.event? window.event.returnValue = false : event.preventDefault();
+        },
+        shwoSeachChange(){
+            this.showSearch=!this.showSearch;
         },
         getbyHot(){
             let _this = this;
