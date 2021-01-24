@@ -1,10 +1,12 @@
 export default {
     data () {
       return {
+        indate: new Date().toISOString().substr(0, 10),
+        inmenu: false,
+        getdate: new Date().toISOString().substr(0, 10),
+        getmenu: false,
         date: new Date().toISOString().substr(0, 10),
         menu: false,
-        modal: false,
-        menu2: false,
         showSearch: false,
         headers: [
           {
@@ -39,6 +41,20 @@ export default {
         },
       }
     },
+    computed: {
+        formTitle () {
+          return this.editedIndex === -1 ? '新規' : '修正'
+        },
+      },
+  
+    watch: {
+        dialog (val) {
+          val || this.close()
+        },
+        dialogDelete (val) {
+          val || this.closeDelete()
+        },
+      },
     created () {
         this.initialize()
       },
@@ -59,6 +75,54 @@ export default {
                     console.log(err);
                 });
         },
+        editItem (item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            //this.dialog = true
+            let redirect = decodeURIComponent(this.$route.query.redirect || '/Input');
+            this.$router.push({
+            path: redirect,
+            params: {
+              editedItem: this.editedItem
+            }
+						 });
+          },
+    
+          deleteItem (item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+            this.dialogDelete = true
+          },
+    
+          deleteItemConfirm () {
+            this.desserts.splice(this.editedIndex, 1)
+            this.closeDelete()
+          },
+    
+          close () {
+            this.dialog = false
+            this.$nextTick(() => {
+              this.editedItem = Object.assign({}, this.defaultItem)
+              this.editedIndex = -1
+            })
+          },
+    
+          closeDelete () {
+            this.dialogDelete = false
+            this.$nextTick(() => {
+              this.editedItem = Object.assign({}, this.defaultItem)
+              this.editedIndex = -1
+            })
+          },
+    
+          save () {
+            if (this.editedIndex > -1) {
+              Object.assign(this.desserts[this.editedIndex], this.editedItem)
+            } else {
+              this.desserts.push(this.editedItem)
+            }
+            this.close()
+          },
         goSearch(event){
             let _this = this;
           

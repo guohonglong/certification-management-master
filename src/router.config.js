@@ -7,6 +7,7 @@
 import Login from './components/Login.vue'
 import Reg from './components/Reg.vue'
 import Search from './components/Search.vue'
+import Infointput from './components/Input.vue'
 export default [
 //     {
 //     path: '/home',
@@ -33,6 +34,10 @@ export default [
 }, {
     path: '/register',
     component: Reg
+}
+, {
+    path: '/input',
+    component: Infointput
 }
 // ,{
 //     path: '/catgory/:id',
