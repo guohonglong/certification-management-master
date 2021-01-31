@@ -26,18 +26,22 @@ export default {
         desserts: [],
         editedIndex: -1,
         editedItem: {
+            employee_id: 0,
             name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
+            frigana: '',
+            entering_date: '',
+            certification_name: '',
+            get_date: '',
+            encourage_date: ''
         },
         defaultItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
+          employee_id: 0,
+          name: '',
+          frigana: '',
+          entering_date: '',
+          certification_name: '',
+          get_date: '',
+          encourage_date: ''
         },
       }
     },
@@ -79,10 +83,12 @@ export default {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
             //this.dialog = true
-            let redirect = decodeURIComponent(this.$route.query.redirect || '/Input');
+            //let redirect = decodeURIComponent(this.$route.query.redirect || '/Input');
             this.$router.push({
-            path: redirect,
+            //path: redirect,
+            name :'input',
             params: {
+              id: this.editItem.employee_id,
               editedItem: this.editedItem
             }
 						 });

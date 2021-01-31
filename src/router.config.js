@@ -37,6 +37,7 @@ export default [
 }
 , {
     path: '/input',
+    name: 'input',
     component: Infointput
 }
 // ,{

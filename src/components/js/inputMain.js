@@ -37,6 +37,7 @@ export default {
 
     methods: {
       initialize () {
+        console.log(this.$route.params.id);
         if (this.$route.params.editedItem) {
           this.employeeId = this.$route.params.editedItem.employee_id,
           this.name =  this.$route.params.editedItem.name,
